@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pace Calculator | Miles After Five</title>
+  <meta name="description" content="Enter your distance and time to find your average running pace per mile.">
+  <link rel="icon" type="image/svg+xml" href="assets/logos/miles-after-five-mark.svg">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+
+  <!-- Navigation -->
+  <header class="site-header">
+    <nav class="nav" aria-label="Main navigation">
+      <a class="brand" href="index.html">
+        <img class="brand-mark" src="assets/logos/miles-after-five-mark.svg" alt="" width="40" height="40">
+        <span class="brand-name">Miles <span>After</span> Five</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="pace-calculator.html" aria-current="page">Pace Calculator</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="main">
+    <section class="page-hero" aria-labelledby="calc-heading">
+      <div class="container">
+        <span class="eyebrow" style="color: var(--orange);">Pace Calculator</span>
+        <h1 id="calc-heading">Find your pace.</h1>
+        <p class="lead">
+          Enter how far you went and how long it took. We will work out your
+          average pace per mile. Walk, jog or run, every mile counts.
+        </p>
+      </div>
+    </section>
+
+    <section class="calculator-section">
+      <div class="container">
+        <div class="calculator-card">
+          <form id="pace-form" novalidate>
+
+            <!-- Errors appear here -->
+            <div id="error-box" class="error-box" role="alert" hidden>
+              <strong>Almost there. Let's fix a couple of things:</strong>
+              <ul id="error-list"></ul>
+            </div>
+
+            <!-- Distance -->
+            <div class="field">
+              <label for="distance">Distance (miles)</label>
+              <span class="hint" id="distance-hint">Decimals are welcome, like 3.1 or 6.55.</span>
+              <input
+                type="number"
+                id="distance"
+                name="distance"
+                inputmode="decimal"
+                min="0"
+                step="any"
+                placeholder="e.g. 3.1"
+                aria-describedby="distance-hint">
+            </div>
+
+            <!-- Time -->
+            <fieldset aria-describedby="time-hint">
+              <legend>Total running time</legend>
+              <span class="hint" id="time-hint">Enter your finish time in minutes and seconds.</span>
+              <div class="input-row">
+                <div class="field-inline">
+                  <label for="minutes">Minutes</label>
+                  <input
+                    type="number"
+                    id="minutes"
+                    name="minutes"
+                    inputmode="numeric"
+                    min="0"
+                    step="1"
+                    placeholder="e.g. 30">
+                </div>
+                <div class="field-inline">
+                  <label for="seconds">Seconds</label>
+                  <input
+                    type="number"
+                    id="seconds"
+                    name="seconds"
+                    inputmode="numeric"
+                    min="0"
+                    max="59"
+                    step="1"
+                    placeholder="e.g. 0">
+                </div>
+              </div>
+            </fieldset>
+
+            <div class="button-row">
+              <button type="submit" class="btn btn-primary">Calculate My Pace</button>
+              <button type="button" id="reset-btn" class="btn btn-secondary">Reset</button>
+            </div>
+          </form>
+
+          <!-- Result (hidden until valid inputs are submitted) -->
+          <div id="result" class="result" role="status" aria-live="polite" tabindex="-1" hidden>
+            <canvas id="confetti" class="confetti-canvas" aria-hidden="true"></canvas>
+            <p class="result-label">Your average pace</p>
+            <p class="result-pace" id="result-pace">00:00</p>
+            <p class="result-unit">minutes per mile</p>
+            <p class="result-summary" id="result-summary"></p>
+            <p class="result-message" id="result-message"></p>
+          </div>
+        </div>
+
+        <p class="calc-note">
+          Pace is just one piece of the story. Showing up is what counts.
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <p class="footer-brand">
+            <img class="brand-mark" src="assets/logos/miles-after-five-mark.svg" alt="" width="36" height="36">
+            <span>Miles <span>After</span> Five</span>
+          </p>
+          <p class="footer-tagline">More than miles. More connections. Better evenings.</p>
+        </div>
+
+        <nav aria-label="Footer navigation">
+          <ul class="footer-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="pace-calculator.html">Pace Calculator</a></li>
+            <li><a href="https://www.instagram.com/milesafter5_/" target="_blank" rel="noopener noreferrer">Instagram</a></li>
+          </ul>
+        </nav>
+      </div>
+
+      <p class="footer-copy">&copy; 2026 Miles After Five. Clock out. Lace up.</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
