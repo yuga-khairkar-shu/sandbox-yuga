@@ -156,6 +156,104 @@
   var resetBtn = document.getElementById("reset-btn");
   var messageIndex = 0;
 
+  /* ------------------------------------------------------------------------
+     Confetti celebration (canvas, no libraries, brand colors only)
+     ---------------------------------------------------------------------- */
+
+  var confettiCanvas = document.getElementById("confetti");
+  var confettiFrame = null;
+  var CONFETTI_COLORS = ["#F4A261", "#A8DADC", "#FFFFFF", "#FAD0A8", "#7FC4C8"];
+  var CONFETTI_COUNT = 110;
+  var CONFETTI_MS = 2800;
+
+  function prefersReducedMotion() {
+    return !!(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches);
+  }
+
+  function stopConfetti() {
+    if (confettiFrame !== null) {
+      cancelAnimationFrame(confettiFrame);
+      confettiFrame = null;
+    }
+    if (confettiCanvas) {
+      var ctx = confettiCanvas.getContext("2d");
+      ctx.setTransform(1, 0, 0, 1, 0, 0);
+      ctx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
+    }
+  }
+
+  function launchConfetti() {
+    stopConfetti();
+    if (!confettiCanvas || prefersReducedMotion()) return; // respect the visitor's motion setting
+
+    var box = resultBox.getBoundingClientRect();
+    var dpr = window.devicePixelRatio || 1;
+    var w = box.width;
+    var h = box.height;
+    confettiCanvas.width = Math.round(w * dpr);
+    confettiCanvas.height = Math.round(h * dpr);
+    var ctx = confettiCanvas.getContext("2d");
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+    // Burst from the top-middle of the box, fanning out and falling with gravity
+    var pieces = [];
+    for (var i = 0; i < CONFETTI_COUNT; i++) {
+      var angle = Math.PI * (0.15 + Math.random() * 0.7); // downward fan
+      var speed = 3 + Math.random() * 6;
+      pieces.push({
+        x: w / 2 + (Math.random() - 0.5) * w * 0.3,
+        y: h * 0.12,
+        vx: Math.cos(angle) * speed * (Math.random() < 0.5 ? -1 : 1),
+        vy: -2 - Math.random() * 4,
+        size: 6 + Math.random() * 6,
+        rot: Math.random() * Math.PI * 2,
+        vrot: (Math.random() - 0.5) * 0.35,
+        color: CONFETTI_COLORS[i % CONFETTI_COLORS.length],
+        round: Math.random() < 0.25
+      });
+    }
+
+    var start = null;
+    function frame(now) {
+      if (start === null) start = now;
+      var elapsed = now - start;
+      var fade = elapsed > CONFETTI_MS * 0.6
+        ? Math.max(0, 1 - (elapsed - CONFETTI_MS * 0.6) / (CONFETTI_MS * 0.4))
+        : 1;
+
+      ctx.clearRect(0, 0, w, h);
+      for (var j = 0; j < pieces.length; j++) {
+        var p = pieces[j];
+        p.vy += 0.16;   // gravity
+        p.vx *= 0.99;   // a little air drag
+        p.x += p.vx;
+        p.y += p.vy;
+        p.rot += p.vrot;
+
+        ctx.save();
+        ctx.globalAlpha = fade;
+        ctx.translate(p.x, p.y);
+        ctx.rotate(p.rot);
+        ctx.fillStyle = p.color;
+        if (p.round) {
+          ctx.beginPath();
+          ctx.arc(0, 0, p.size / 2.4, 0, Math.PI * 2);
+          ctx.fill();
+        } else {
+          ctx.fillRect(-p.size / 2, -p.size / 4, p.size, p.size / 2);
+        }
+        ctx.restore();
+      }
+
+      if (elapsed < CONFETTI_MS) {
+        confettiFrame = requestAnimationFrame(frame);
+      } else {
+        stopConfetti();
+      }
+    }
+    confettiFrame = requestAnimationFrame(frame);
+  }
+
   /** Reads an input; a non-numeric entry (which browsers report as empty) becomes "invalid". */
   function readField(input) {
     return input.validity && input.validity.badInput ? "invalid" : input.value;
@@ -170,6 +268,7 @@
   }
 
   function hideResult() {
+    stopConfetti();
     resultBox.hidden = true;
     resultPace.textContent = "00:00";
     resultSummary.textContent = "";
@@ -196,6 +295,7 @@
     messageIndex += 1;
     resultBox.hidden = false;
     resultBox.focus();
+    launchConfetti(); // celebrate once the box is visible so it can be measured
   }
 
   form.addEventListener("submit", function (event) {
