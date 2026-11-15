@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48" role="img" aria-label="Miles After Five logo mark">
+  <title>Miles After Five</title>
+  <!-- Setting sun: the "after five" moment -->
+  <path d="M8 27a16 16 0 0 1 32 0z" fill="#F4A261"/>
+  <!-- Two flowing path lines: the run route home -->
+  <path d="M3 33c7-6 12 5 20-1s14-3 22 0" fill="none" stroke="#A8DADC" stroke-width="3.2" stroke-linecap="round"/>
+  <path d="M9 41c6-4 10 3 16-1s9-2 14 0" fill="none" stroke="#A8DADC" stroke-width="3.2" stroke-linecap="round" opacity="0.65"/>
+</svg>

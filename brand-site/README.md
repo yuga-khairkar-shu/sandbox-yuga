@@ -17,7 +17,7 @@ miles-after-five/
   assets/
     images/              hero-runner-laces.jpg, runner-line-art.png
     fonts/               (empty, see "Fonts" below)
-    logos/               (empty, see "Open items" below)
+    logos/               miles-after-five-mark.svg
 ```
 
 ## How to test it
@@ -45,5 +45,5 @@ The brand font is Montserrat, but no font files exist in the team repository, so
 
 - **`brand/voice.md` was not found.** Neither accessible repository contains it (the second repo, `sandbox-yuga`, is empty). Copy was written from the PRD and the Instagram posts ("Clock out. Lace up." and the core brand message). Please review against the real voice guide when you have it.
 - **Instagram link:** footer links to `https://www.instagram.com/milesafter5_/` on both pages.
-- **Logo:** none found, so the nav uses a text wordmark.
+- **Logo:** none existed in the team repository, so a simple original mark was created (`assets/logos/miles-after-five-mark.svg`: a setting sun over two path lines, in the brand colors) and sits next to the text wordmark in the header and footer. It is also used as the browser-tab icon. Swap in an official logo here if one exists.
 - **Home page copy** deliberately avoids event times, locations, testimonials and member numbers, per the PRD.
